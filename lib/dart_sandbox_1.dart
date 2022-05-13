@@ -1,43 +1,32 @@
 import 'dart:async';
 
-int calculate() {
-  return 6 * 7;
-}
-
-
-class Kid{
-  final int age;
+class FirebaseAccount {
   final String name;
-  Kid( this.age,  this.name);
+  final int age;
+  final bool isOlderThan18;
 
-  void sendRequest() async
-  {
-    String command = await makeFriendRequest();
-    print("Congratulations : $command");
+  FirebaseAccount(this.name, this.age, this.isOlderThan18);
+
+  void getAcountInfo() async {
+    String ans = await _getAcountInfo(name, age, isOlderThan18);
+    print(ans);
   }
 
-  Future<String> makeFriendRequest()
-  {
-    Future<String> data = Future.delayed(Duration(seconds: 4),() {
-      return "Sent sucesffuly";
-    });
+  Future<String> _getAcountInfo(String name, int age, bool is18) async {
+    String data = await Future.delayed(
+      Duration(seconds: 10),
+      () {
+        return "Hello $name, your are $age years old. Access to explicit content is $is18 \n";
+      },
+    );
     return data;
   }
-
-  void KidInfo()
-  {
-    print("Hi, my name is $name and I am $age years old\n");
-  }
-
 }
 
-void main()
-{
-  print("start");
-
-  var Daniel = Kid(19, "Daniel");
-  Daniel.KidInfo();
-  print("Request made now\n");
-  Daniel.sendRequest();
-  print("DONE");
+void main() {
+  //lets make a simulation of firebase auth
+  print("Start\n");
+  FirebaseAccount Daniel = FirebaseAccount("Daniel", 19, true);
+  Daniel.getAcountInfo();
+  print("end\n");
 }
